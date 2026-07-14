@@ -68,6 +68,7 @@ import com.instructure.canvasapi2.utils.ApiType
 import com.instructure.canvasapi2.utils.LinkHeaders
 import com.instructure.canvasapi2.utils.Logger.d
 import com.instructure.canvasapi2.utils.isValid
+import com.instructure.loginapi.login.BuildConfig
 import com.instructure.loginapi.login.LoginNavigation
 import com.instructure.loginapi.login.R
 import com.instructure.loginapi.login.api.MobileVerifyAPI.mobileVerify
@@ -312,7 +313,14 @@ abstract class BaseLoginSignInActivity : BaseCanvasActivity(), OnAuthenticationS
 
     private fun beginSignIn(accountDomain: AccountDomain) {
         val url = accountDomain.domain
-        if (canvasLogin == MOBILE_VERIFY_FLOW) { //Skip Mobile Verify
+        if (isSelfHostedDomain(url)) { //Self-hosted instance with a baked-in developer key, no mobile verify
+            protocol = "https"
+            domain = url!!
+            clientId = BuildConfig.SELF_HOSTED_CLIENT_ID
+            clientSecret = BuildConfig.SELF_HOSTED_CLIENT_SECRET
+            buildAuthenticationUrl(protocol, accountDomain, clientId, true)
+            loadUrl(webView, authenticationURL, headers)
+        } else if (canvasLogin == MOBILE_VERIFY_FLOW) { //Skip Mobile Verify
             val view = LayoutInflater.from(this@BaseLoginSignInActivity).inflate(R.layout.dialog_skip_mobile_verify, null)
             val protocolEditText = view.findViewById<EditText>(R.id.mobileVerifyProtocol)
             val clientIdEditText = view.findViewById<EditText>(R.id.mobileVerifyClientId)
@@ -347,6 +355,12 @@ abstract class BaseLoginSignInActivity : BaseCanvasActivity(), OnAuthenticationS
             mobileVerify(url, mobileVerifyCallback)
             showLoading()
         }
+    }
+
+    private fun isSelfHostedDomain(domain: String?): Boolean {
+        return BuildConfig.SELF_HOSTED_DOMAIN.isNotBlank()
+                && BuildConfig.SELF_HOSTED_CLIENT_ID.isNotBlank()
+                && domain.equals(BuildConfig.SELF_HOSTED_DOMAIN, ignoreCase = true)
     }
 
     override fun onRetrieveCredentials(username: String?, password: String?) {

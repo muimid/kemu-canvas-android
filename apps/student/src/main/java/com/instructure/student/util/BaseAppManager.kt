@@ -109,6 +109,7 @@ abstract class BaseAppManager : com.instructure.canvasapi2.AppManager(), Analyti
     }
 
     private fun initNutrient() {
+        if (BuildConfig.PSPDFKIT_LICENSE_KEY.isBlank()) return // No license; Nutrient falls back to demo mode
         try {
             Nutrient.initialize(this, BuildConfig.PSPDFKIT_LICENSE_KEY)
         } catch (e: NutrientInitializationFailedException) {

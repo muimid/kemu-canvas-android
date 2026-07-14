@@ -27,6 +27,7 @@ import com.instructure.canvasapi2.managers.OAuthManager
 import com.instructure.canvasapi2.managers.UserManager
 import com.instructure.canvasapi2.models.ExperienceSummary
 import com.instructure.canvasapi2.utils.ApiPrefs
+import com.instructure.canvasapi2.utils.Logger
 import com.instructure.canvasapi2.utils.RemoteConfigParam
 import com.instructure.canvasapi2.utils.RemoteConfigUtils
 import com.instructure.pandautils.mvvm.Event
@@ -72,6 +73,7 @@ class LoginViewModel @Inject constructor(
                         val experience = getExperience(checkElementary)
                         checkTermsAcceptance(experience)
                     } else {
+                        Logger.e("checkLogin: /users/self failed, logging out. Result: $selfResult")
                         loginResultAction.value = Event(LoginResultAction.TokenNotValid)
                     }
                 } else {
@@ -79,6 +81,7 @@ class LoginViewModel @Inject constructor(
                     checkTermsAcceptance(experience, offlineLogin)
                 }
             } catch (e: Exception) {
+                Logger.e("checkLogin: exception, logging out. ${e.javaClass.name}: ${e.message}")
                 loginResultAction.value = Event(LoginResultAction.TokenNotValid)
             }
         }

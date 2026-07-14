@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.instructure.canvasapi2.models.AccountDomain
 import com.instructure.canvasapi2.utils.ContextKeeper
+import com.instructure.loginapi.login.BuildConfig as LoginBuildConfig
 import com.instructure.loginapi.login.activities.BaseLoginLandingPageActivity
 import com.instructure.loginapi.login.model.SignedInUser
 import com.instructure.pandautils.analytics.SCREEN_VIEW_LOGIN_LANDING
@@ -43,7 +44,11 @@ class LoginLandingPageActivity : BaseLoginLandingPageActivity() {
     lateinit var databaseProvider: DatabaseProvider
 
     override fun beginFindSchoolFlow(): Intent {
-        return FindSchoolActivity.createIntent(this)
+        return if (LoginBuildConfig.SELF_HOSTED_DOMAIN.isNotBlank()) {
+            SignInActivity.createIntent(this, AccountDomain(LoginBuildConfig.SELF_HOSTED_DOMAIN))
+        } else {
+            FindSchoolActivity.createIntent(this)
+        }
     }
 
     override fun beginCanvasNetworkFlow(url: String): Intent {
