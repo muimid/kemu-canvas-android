@@ -107,6 +107,15 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../candroid.keystore')
+            storePassword System.getenv('KEYSTORE_PASSWORD')
+            keyAlias System.getenv('KEY_ALIAS')
+            keyPassword System.getenv('KEY_PASSWORD')
+        }
+    }
+
     buildTypes {
         debug {
             testCoverageEnabled = coverageEnabled
@@ -133,6 +142,7 @@ android {
         }
 
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'

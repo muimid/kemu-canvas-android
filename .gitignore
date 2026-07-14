@@ -49,3 +49,7 @@ fastlane/.idea
 apps/captures
 
 libs/DocumentScanner/build/
+
+# Local signing keystores
+*.keystore
+*.jks
