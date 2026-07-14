@@ -22,6 +22,7 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.instructure.canvasapi2.models.AccountDomain
 import com.instructure.canvasapi2.utils.ApiPrefs
+import com.instructure.loginapi.login.BuildConfig as LoginBuildConfig
 import com.instructure.loginapi.login.activities.BaseLoginLandingPageActivity
 import com.instructure.loginapi.login.snicker.SnickerDoodle
 import com.instructure.pandautils.analytics.SCREEN_VIEW_LOGIN_LANDING
@@ -38,7 +39,11 @@ class LoginLandingPageActivity : BaseLoginLandingPageActivity() {
 
     override fun loginWithQRCodeEnabled(): Boolean = true
 
-    override fun beginFindSchoolFlow(): Intent = FindSchoolActivity.createIntent(this)
+    override fun beginFindSchoolFlow(): Intent = if (LoginBuildConfig.SELF_HOSTED_DOMAIN.isNotBlank()) {
+        SignInActivity.createIntent(this, AccountDomain(LoginBuildConfig.SELF_HOSTED_DOMAIN))
+    } else {
+        FindSchoolActivity.createIntent(this)
+    }
 
     override fun beginCanvasNetworkFlow(url: String): Intent = SignInActivity.createIntent(this, AccountDomain(url))
 

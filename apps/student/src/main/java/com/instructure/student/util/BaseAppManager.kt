@@ -38,6 +38,7 @@ import com.instructure.student.activity.NavigationActivity
 import com.pspdfkit.Nutrient
 import com.pspdfkit.exceptions.InvalidNutrientLicenseException
 import com.pspdfkit.exceptions.NutrientInitializationFailedException
+import com.pspdfkit.initialization.InitializationOptions
 
 abstract class BaseAppManager : com.instructure.canvasapi2.AppManager(), AnalyticsEventHandling {
 
@@ -109,9 +110,13 @@ abstract class BaseAppManager : com.instructure.canvasapi2.AppManager(), Analyti
     }
 
     private fun initNutrient() {
-        if (BuildConfig.PSPDFKIT_LICENSE_KEY.isBlank()) return // No license; Nutrient falls back to demo mode
         try {
-            Nutrient.initialize(this, BuildConfig.PSPDFKIT_LICENSE_KEY)
+            if (BuildConfig.PSPDFKIT_LICENSE_KEY.isBlank()) {
+                // No license configured; initialize in demo mode (opened documents are watermarked)
+                Nutrient.initialize(this, InitializationOptions())
+            } else {
+                Nutrient.initialize(this, BuildConfig.PSPDFKIT_LICENSE_KEY)
+            }
         } catch (e: NutrientInitializationFailedException) {
             Logger.e("Current device is not compatible with Nutrient!")
         } catch (e: InvalidNutrientLicenseException) {
