@@ -84,8 +84,10 @@ abstract class BaseLoginInitActivity : BaseCanvasActivity() {
         if (BuildConfig.IS_TESTING || isDebuggable) {
             val token = getValidToken()
             if (token.isEmpty()) {
-                // Start Login Flow
+                // Start Login Flow; finish so pressing back on the login screen exits the app
+                // instead of resuming this activity, which would relaunch the login flow forever
                 startActivity(beginLoginFlowIntent())
+                finish()
             } else {
                 // Start App
                 navigation.startLogin(viewModel, true)
@@ -95,8 +97,9 @@ abstract class BaseLoginInitActivity : BaseCanvasActivity() {
                 runOnUiThread {
                     val token = getValidToken()
                     if (token.isEmpty()) {
-                        //Start Login Flow
+                        //Start Login Flow; finish so back from the login screen exits the app
                         startActivity(beginLoginFlowIntent())
+                        finish()
                     } else {
                         //Start App
                         navigation.startLogin(viewModel, true)

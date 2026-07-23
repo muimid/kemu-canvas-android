@@ -212,7 +212,6 @@ abstract class BaseLoginLandingPageActivity : BaseCanvasActivity() {
 
     private fun applyTheme() = with(binding) {
         // Colors
-        val color = themeColor()
         val buttonColor = ContextCompat.getColor(this@BaseLoginLandingPageActivity, R.color.textInfo)
 
         // Button
@@ -220,8 +219,7 @@ abstract class BaseLoginLandingPageActivity : BaseCanvasActivity() {
         DrawableCompat.setTint(wrapDrawable, buttonColor)
         findMySchool.background = DrawableCompat.unwrap(wrapDrawable)
 
-        // Icon
-        ColorUtils.colorIt(color, canvasLogo)
+        // The logo is a full-color institution bitmap; do not tint it with the theme color
 
         ViewStyler.themeStatusBar(this@BaseLoginLandingPageActivity)
     }

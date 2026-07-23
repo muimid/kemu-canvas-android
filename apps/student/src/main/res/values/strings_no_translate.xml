@@ -18,7 +18,7 @@
 
 <resources>
 
-    <string name="student_app_name" translatable="false">KeMU Digital Campus</string>
+    <string name="student_app_name" translatable="false">KeMU Digital Campus Student</string>
 
     <string name="patched_appbar_scrolling_view_behavior" translatable="false">com.instructure.student.view.PatchedScrollingViewBehavior</string>
 
@@ -32,4 +32,5 @@
     <string name="featureFlagsTitle" translatable="false">Feature Flags</string>
 
 </resources>
+
 
