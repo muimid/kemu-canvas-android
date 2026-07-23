@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2016 - present Instructure, Inc.
   ~
@@ -18,7 +18,7 @@
 
 <resources>
 
-    <string name="student_app_name" translatable="false">Canvas</string>
+    <string name="student_app_name" translatable="false">KeMU Digital Campus</string>
 
     <string name="patched_appbar_scrolling_view_behavior" translatable="false">com.instructure.student.view.PatchedScrollingViewBehavior</string>
 
@@ -32,3 +32,4 @@
     <string name="featureFlagsTitle" translatable="false">Feature Flags</string>
 
 </resources>
+
