@@ -283,7 +283,7 @@
     </application>
 
     <queries>
-        <package android:name="com.instructure.candroid" />
+        <package android:name="ke.ac.kemu.digitalcampus" />
         <package android:name="com.instructure.parentapp" />
         <package android:name="us.zoom.videomeetings" />
         <intent>

@@ -49,6 +49,7 @@ android {
     }
 
     defaultConfig {
+        applicationId "ke.ac.kemu.digitalcampus.instructor"
         minSdkVersion Versions.MIN_SDK
         targetSdkVersion Versions.TARGET_SDK
         versionCode = 92

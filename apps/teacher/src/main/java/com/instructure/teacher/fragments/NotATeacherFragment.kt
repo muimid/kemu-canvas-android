@@ -43,7 +43,7 @@ class NotATeacherFragment : BaseFragment() {
     private val binding by viewBinding(FragmentNotATeacherBinding::bind)
 
     private val MARKET_URI_PREFIX = "market://details?id="
-    private val CANVAS_ID = "com.instructure.candroid"
+    private val CANVAS_ID = "ke.ac.kemu.digitalcampus"
     private val PARENT_ID = "com.instructure.parentapp"
 
     override fun layoutResId(): Int = R.layout.fragment_not_a_teacher
